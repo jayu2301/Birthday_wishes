@@ -18,9 +18,13 @@
 <body class="min-h-screen flex items-center justify-center px-4">
 
   <!-- 🎵 Birthday Music -->
-  <audio id="birthdayMusic" loop>
-    <source src="bd.mp3.mp4" type="audio/mpeg">
-  </audio>
+  <audio id="introSong" loop>
+  <source src="str.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="birthdaySong" preload="auto">
+  <source src="bd.mp3.mp4" type="audio/mpeg">
+</audio>
 
   <div class="bg-white shadow-2xl rounded-2xl p-6 sm:p-8 max-w-md w-full text-center">
 
@@ -48,10 +52,24 @@
   </div>
 
 <script>
+
+const introSong = document.getElementById("introSong");
+const birthdaySong = document.getElementById("birthdaySong");
+
+// intro music start on first click (mobile friendly)
+document.addEventListener("click", function startIntro(){
+    introSong.play();
+    document.removeEventListener("click", startIntro);
+});
+
 function celebrate() {
 
-  // 🎵 play music
-  document.getElementById("birthdayMusic").play();
+  // stop intro song
+  introSong.pause();
+
+  // play birthday song
+  birthdaySong.currentTime = 0;
+  birthdaySong.play();
 
   document.getElementById('surprise').classList.remove('hidden');
 
@@ -65,10 +83,13 @@ function celebrate() {
     confetti({ particleCount: 100, spread: 120, origin: { x: 0.1 } });
     confetti({ particleCount: 100, spread: 120, origin: { x: 0.9 } });
   }, 300);
+
 }
+
 </script>
 
 </body>
 </html>
+
 
 
